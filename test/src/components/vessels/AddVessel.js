@@ -4,7 +4,7 @@ import { Ship, Plus } from 'lucide-react';
 import { shipTypes } from '../../config/shipTypes'; // Importez les types de navires
 
 function AddVessel() {
-  const { addVessel } = useVessel();
+  const { addVessel, vessels } = useVessel(); // Récupérer addVessel et vessels du contexte
   const [vesselData, setVesselData] = useState({
     vesselName: '',
     imoNumber: '',
@@ -118,6 +118,54 @@ function AddVessel() {
           </button>
         </div>
       </form>
+
+      {/* Section "Mes Navires" */}
+      <div className="mt-8">
+        <h2 className="text-lg font-medium text-gray-900 mb-4 flex items-center">
+          <Ship className="h-5 w-5 mr-2 text-blue-500" />
+          Mes Navires
+        </h2>
+        <div className="bg-white shadow rounded-lg p-6">
+          {vessels.length === 0 ? (
+            <p className="text-gray-500">Aucun navire ajouté pour le moment.</p>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Nom du Navire
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Numéro IMO
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Type de Navire
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Année de Construction
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Pavillon
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {vessels.map((vessel, index) => (
+                    <tr key={index}>
+                      <td className="px-6 py-4 whitespace-nowrap">{vessel.vesselName}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">{vessel.imoNumber}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">{vessel.vesselType}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">{vessel.yearBuilt}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">{vessel.flag}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
